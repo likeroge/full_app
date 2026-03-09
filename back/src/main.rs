@@ -5,7 +5,9 @@ use tokio::net::TcpListener;
 
 #[tokio::main]
 async fn main() {
-    let router = Router::new().route("/api", get(|| async { "Hello, World!" }));
+    let router = Router::new()
+        .route("/api", get(|| async { "Hello, World!" }))
+        .route("/api/json", get(|| async { "{\"key\":\"value\"}" }));
 
     let addr = SocketAddr::from(([0, 0, 0, 0], 5005));
     let tcp = TcpListener::bind(&addr)

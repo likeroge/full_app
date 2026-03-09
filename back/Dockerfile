@@ -40,7 +40,7 @@ RUN useradd -m -u 1000 appuser
 WORKDIR /app
 
 # Копируем собранный бинарник из builder этапа
-COPY --from=builder /app/target/release/ruapi /app/ruapi
+COPY --from=builder /app/target/release/back /app/back
 
 # Копируем статические файлы если есть
 # COPY --chown=appuser:appuser static ./static
