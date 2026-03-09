@@ -12,8 +12,8 @@ pub async fn all_users() -> Result<ApiResponse, ApiError> {
 
     let u2 = User {
         id: 2,
-        name: String::from("John Doe"),
-        email: String::from("jL2r5@example.com"),
+        name: String::from("Gagagagag Doe"),
+        email: String::from("hasdasd5@xcxcsle.com"),
     };
 
     all_users.push(u1);
@@ -21,3 +21,4 @@ pub async fn all_users() -> Result<ApiResponse, ApiError> {
 
     Ok(ApiResponse::JsonData(json!(all_users)))
 }
+
