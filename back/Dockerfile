@@ -20,7 +20,7 @@ RUN rm -rf src
 
 # Копируем исходный код
 COPY src ./src
-COPY templates ./templates
+# COPY templates ./templates
 
 # Пересобираем приложение (только наш код, зависимости уже закэшированы)
 RUN cargo build --release --frozen
