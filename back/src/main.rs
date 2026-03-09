@@ -16,8 +16,8 @@ async fn main() {
     let router = Router::new()
         .route("/api", get(|| async { "Hello, World!" }))
         .route("/api/json", get(|| async { "{\"key\":\"value\"}" }))
-        .route("/api/users", get(handlers::users::all_users));
-    // .layer(cors_layer);
+        .route("/api/users", get(handlers::users::all_users))
+        .layer(cors_layer);
 
     let addr = SocketAddr::from(([0, 0, 0, 0], 5005));
     let tcp = TcpListener::bind(&addr)
