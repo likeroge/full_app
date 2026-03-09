@@ -2,6 +2,8 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+ENV VITE_API_URL=/api
+
 COPY package*.json ./
 # Если используете pnpm/yarn: замените на соответствующие команды
 RUN npm ci --silent

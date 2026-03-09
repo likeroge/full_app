@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import App from "./App";
+import { Users } from "./pages/Users";
 
 export const router = createBrowserRouter([
   {
@@ -7,7 +8,7 @@ export const router = createBrowserRouter([
     element: <App />
   },
   {
-    path: "/hello",
-    element: <div>Hello world</div>
+    path: "/users",
+    element: <Users />
   }
 ]) 

@@ -6,7 +6,7 @@ function App() {
   const navigate = useNavigate()
 
   const onButtonHandler = () => {
-    navigate('/hello')
+    navigate('/users')
   }
   return (
     <div>
