@@ -1,17 +1,25 @@
 mod api_errors;
 mod api_responses;
+mod db;
 mod handlers;
 mod models;
+mod repository;
 
 use std::net::SocketAddr;
 
-use axum::{http::HeaderValue, routing::get, Router};
+use axum::{
+    Extension, Router,
+    http::HeaderValue,
+    routing::{get, post},
+};
 use reqwest::{
-    header::{ACCEPT, AUTHORIZATION, CONTENT_TYPE},
     Method,
+    header::{ACCEPT, AUTHORIZATION, CONTENT_TYPE},
 };
 use tokio::net::TcpListener;
 use tower_http::cors::CorsLayer;
+
+use crate::db::create_pool;
 
 #[tokio::main]
 async fn main() {
@@ -28,12 +36,14 @@ async fn main() {
         ])
         .allow_headers([AUTHORIZATION, ACCEPT, CONTENT_TYPE]);
     // .allow_credentials(true);
-
+    let pool = create_pool().await.expect("DB pool not created");
     let router = Router::new()
         .route("/api", get(|| async { "Hello, World!" }))
         .route("/api/json", get(|| async { "{\"key\":\"value\"}" }))
         .route("/api/users", get(handlers::users::all_users))
-        .layer(cors);
+        .route("/api/users", post(handlers::users::create_user))
+        .layer(cors)
+        .layer(Extension(pool));
     // .layer(cors_layer);
 
     let addr = SocketAddr::from(([0, 0, 0, 0], 5005));
