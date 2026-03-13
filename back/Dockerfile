@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 # Копируем только файлы зависимостей
 COPY Cargo.toml Cargo.lock ./
-COPY database.db ./
+COPY database.db ./database.db
 # Создаем фиктивный main.rs для предварительной компиляции зависимостей
 RUN mkdir -p src && \
   echo "fn main() {}" > src/main.rs
