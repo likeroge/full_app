@@ -1,3 +1,4 @@
+mod api_docs;
 mod api_errors;
 mod api_responses;
 mod db;
@@ -18,8 +19,11 @@ use reqwest::{
 };
 use tokio::net::TcpListener;
 use tower_http::cors::CorsLayer;
+use utoipa::OpenApi;
+use utoipa_swagger_ui::SwaggerUi;
+// use utoipa_swagger_ui::SwaggerUi;
 
-use crate::db::create_pool;
+use crate::{api_docs::ApiDoc, db::create_pool};
 
 #[tokio::main]
 async fn main() {
@@ -42,9 +46,12 @@ async fn main() {
         .route("/api/json", get(|| async { "{\"key\":\"value\"}" }))
         .route("/api/users", get(handlers::users::all_users))
         .route("/api/users", post(handlers::users::create_user))
+        .route("/api/users/{id}", get(handlers::users::get_by_id))
+        .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", ApiDoc::openapi()))
         .layer(cors)
         .layer(Extension(pool));
     // .layer(cors_layer);
+    //
 
     let addr = SocketAddr::from(([0, 0, 0, 0], 5005));
     let tcp = TcpListener::bind(&addr)

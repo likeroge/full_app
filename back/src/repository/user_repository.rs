@@ -7,7 +7,7 @@ pub struct UserRepository {
 }
 
 impl UserRepository {
-    pub async fn new(pool: SqlitePool) -> Self {
+    pub fn new(pool: SqlitePool) -> Self {
         Self { pool }
     }
 
@@ -27,6 +27,13 @@ impl UserRepository {
         )
         .fetch_one(&self.pool)
         .await?;
+        Ok(result)
+    }
+
+    pub async fn get_user_by_id(&self, id: i32) -> Result<User, sqlx::Error> {
+        let result = query_as!(User, "SELECT id,name,email from users where id=$1", id)
+            .fetch_one(&self.pool)
+            .await?;
         Ok(result)
     }
 }
