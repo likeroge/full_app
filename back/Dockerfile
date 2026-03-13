@@ -24,7 +24,7 @@ RUN rm -rf src
 # Копируем исходный код
 COPY src ./src
 # COPY templates ./templates
-COPY database.db ./database.db
+COPY database.db ./
 
 # Пересобираем приложение (только наш код, зависимости уже закэшированы)
 RUN cargo build --release --frozen
@@ -46,13 +46,13 @@ WORKDIR /app
 # Копируем собранный бинарник из builder этапа
 COPY --from=builder /app/target/release/back /app/back
 COPY --from=builder /app/target/release/back /app/back
-COPY --from=builder . /app/.
+# COPY --from=builder . /app/.
 
 # COPY --from=builder /app/database.db /app/database.db
 # Копируем статические файлы если есть
 # COPY --chown=appuser:appuser static ./static
 # COPY --chown=appuser:appuser templates ./templates
-# COPY --chown=appuser:appuser database.db database.db
+COPY --chown=appuser:appuser database.db ./
 
 
 # Меняем владельца
