@@ -22,7 +22,9 @@ pub async fn create_user(
     }
 }
 
-#[utoipa::path(get, path = "/api/users/{id}", tag = "users")]
+#[utoipa::path(get, path = "/api/users/{id}", tag = "users", responses(
+        (status = 200, description = "Пользователь"),
+        ) )]
 pub async fn get_by_id(
     Extension(pool): Extension<SqlitePool>,
     Path(id): Path<i32>,

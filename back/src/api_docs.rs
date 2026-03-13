@@ -8,7 +8,8 @@ use crate::models::user::User;
 #[openapi(
     paths(
         // get_by_id
-    ),
+    // get_by_id
+        ),
     components(
         schemas(
             User

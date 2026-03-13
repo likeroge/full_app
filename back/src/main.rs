@@ -47,7 +47,7 @@ async fn main() {
         .route("/api/users", get(handlers::users::all_users))
         .route("/api/users", post(handlers::users::create_user))
         .route("/api/users/{id}", get(handlers::users::get_by_id))
-        .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", ApiDoc::openapi()))
+        // .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", ApiDoc::openapi()))
         // .layer(cors)
         .layer(Extension(pool));
     // .layer(cors_layer);
