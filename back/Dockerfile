@@ -24,6 +24,7 @@ RUN rm -rf src
 # Копируем исходный код
 COPY src ./src
 # COPY templates ./templates
+COPY database.db /app/database.db
 
 # Пересобираем приложение (только наш код, зависимости уже закэшированы)
 RUN cargo build --release --frozen
@@ -51,7 +52,7 @@ COPY --from=builder /app/target/release/back /app/back
 # Копируем статические файлы если есть
 # COPY --chown=appuser:appuser static ./static
 # COPY --chown=appuser:appuser templates ./templates
-COPY --chown=appuser:appuser ./database.db ./database.db
+# COPY --chown=appuser:appuser ./database.db ./database.db
 
 
 # Меняем владельца

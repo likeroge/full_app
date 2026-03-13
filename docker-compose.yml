@@ -19,7 +19,7 @@ services:
       - ./Cargo.toml:/app/Cargo.toml:ro
       - ./Cargo.lock:/app/Cargo.lock:ro
       # - ./database.db:/app/database.db
-      - ./database.db:/app/database.db
+      # - ./database.db:/app/database.db
       # - ./templates:/app/static
     networks:
       - app-network
