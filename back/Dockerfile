@@ -1,7 +1,7 @@
 # Этап сборки
 FROM rust:1.91-slim-bookworm AS builder
 
-ENV DATABASE_URL=sqlite:file:./database.db
+# ENV DATABASE_URL=sqlite:file:./database.db
 # Устанавливаем необходимые системные зависимости
 RUN apt-get update && apt-get install -y \
   pkg-config \
