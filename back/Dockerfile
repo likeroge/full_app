@@ -52,7 +52,7 @@ COPY --from=builder /app/target/release/back /app/back
 # Копируем статические файлы если есть
 # COPY --chown=appuser:appuser static ./static
 # COPY --chown=appuser:appuser templates ./templates
-COPY --chown=appuser:appuser ./database.db /app/database.db
+COPY --chown=appuser:appuser database.db database.db
 
 
 # Меняем владельца
