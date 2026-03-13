@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 # Копируем только файлы зависимостей
 COPY Cargo.toml Cargo.lock ./
-COPY database.db ./database.db
+COPY database.db database.db
 # Создаем фиктивный main.rs для предварительной компиляции зависимостей
 RUN mkdir -p src && \
   echo "fn main() {}" > src/main.rs
@@ -51,7 +51,7 @@ COPY --from=builder /app/target/release/back /app/back
 # Копируем статические файлы если есть
 # COPY --chown=appuser:appuser static ./static
 # COPY --chown=appuser:appuser templates ./templates
-COPY --chown=appuser:appuser database.db ./database.db
+COPY --chown=appuser:appuser database.db database.db
 
 
 # Меняем владельца

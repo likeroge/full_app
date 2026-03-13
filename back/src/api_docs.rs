@@ -1,12 +1,13 @@
 use utoipa::OpenApi;
 
-use crate::handlers::users::get_by_id;
+// use crate::handlers::users::get_by_id;
 use crate::models::user::User;
 
 // Определение OpenAPI документации
 #[derive(OpenApi)]
 #[openapi(
     paths(
+        // get_by_id
     ),
     components(
         schemas(
