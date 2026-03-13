@@ -9,13 +9,13 @@ mod repository;
 use std::net::SocketAddr;
 
 use axum::{
-    Extension, Router,
     http::HeaderValue,
     routing::{get, post},
+    Extension, Router,
 };
 use reqwest::{
-    Method,
     header::{ACCEPT, AUTHORIZATION, CONTENT_TYPE},
+    Method,
 };
 use tokio::net::TcpListener;
 use tower_http::cors::CorsLayer;
@@ -48,7 +48,7 @@ async fn main() {
         .route("/api/users", post(handlers::users::create_user))
         .route("/api/users/{id}", get(handlers::users::get_by_id))
         .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", ApiDoc::openapi()))
-        .layer(cors)
+        // .layer(cors)
         .layer(Extension(pool));
     // .layer(cors_layer);
     //
