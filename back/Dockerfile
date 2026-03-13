@@ -46,7 +46,7 @@ WORKDIR /app
 # Копируем собранный бинарник из builder этапа
 COPY --from=builder /app/target/release/back /app/back
 COPY --from=builder /app/target/release/back /app/back
-# COPY --from=builder . /app/.
+COPY --from=builder /app/database.db /app/
 
 # COPY --from=builder /app/database.db /app/database.db
 # Копируем статические файлы если есть
