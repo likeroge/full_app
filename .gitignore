@@ -12,4 +12,6 @@ front/dist-ssr
 front/*.local
 
 back/target
+back/swagger-ui-5.17.14.zip
+
 

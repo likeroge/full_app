@@ -1,15 +1,17 @@
 use utoipa::OpenApi;
 
+use crate::handlers::users::get_by_id;
 use crate::models::user::User;
 
 // Определение OpenAPI документации
 #[derive(OpenApi)]
 #[openapi(
     paths(
-
     ),
     components(
-        schemas()
+        schemas(
+            User
+            )
     ),
     tags(
         (name = "users", description = "Управление пользователями"),
