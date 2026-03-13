@@ -46,13 +46,13 @@ WORKDIR /app
 # Копируем собранный бинарник из builder этапа
 COPY --from=builder /app/target/release/back /app/back
 COPY --from=builder /app/target/release/back /app/back
-COPY --from=builder /app/database.db /app/database.db
+# COPY --from=builder /app/database.db /app/database.db
 
 # COPY --from=builder /app/database.db /app/database.db
 # Копируем статические файлы если есть
 # COPY --chown=appuser:appuser static ./static
 # COPY --chown=appuser:appuser templates ./templates
-# COPY --chown=appuser:appuser ./database.db ./database.db
+COPY --chown=appuser:appuser /app/database.db /app/database.db
 
 
 # Меняем владельца
