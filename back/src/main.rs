@@ -40,17 +40,16 @@ async fn main() {
         ])
         .allow_headers([AUTHORIZATION, ACCEPT, CONTENT_TYPE]);
     // .allow_credentials(true);
-    // let pool = create_pool().await.expect("DB pool not created");
+    let pool = create_pool().await.expect("DB pool not created");
     let router = Router::new()
         .route("/api", get(|| async { "Hello, World!" }))
         .route("/api/json", get(|| async { "{\"key\":\"value\"}" }))
         .route("/api/users", get(handlers::users::all_users))
         .route("/api/users", post(handlers::users::create_user))
-        .route("/api/users/{id}", get(handlers::users::get_by_id));
-    // .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", ApiDoc::openapi()))
-    // .layer(cors)
-    // .layer(Extension(pool));
-    // .layer(cors_layer);
+        .route("/api/users/{id}", get(handlers::users::get_by_id))
+        // .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", ApiDoc::openapi()))
+        // .layer(cors)
+        .layer(Extension(pool));
     //
 
     let addr = SocketAddr::from(([0, 0, 0, 0], 5005));
