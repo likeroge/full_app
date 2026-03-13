@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 # Копируем только файлы зависимостей
 COPY Cargo.toml Cargo.lock ./
+COPY database.db ./
 # Создаем фиктивный main.rs для предварительной компиляции зависимостей
 RUN mkdir -p src && \
   echo "fn main() {}" > src/main.rs
@@ -43,10 +44,12 @@ WORKDIR /app
 
 # Копируем собранный бинарник из builder этапа
 COPY --from=builder /app/target/release/back /app/back
+# COPY --from=builder /app/dar /app/back
 
 # Копируем статические файлы если есть
 # COPY --chown=appuser:appuser static ./static
 # COPY --chown=appuser:appuser templates ./templates
+
 
 # Меняем владельца
 RUN chown -R appuser:appuser /app
