@@ -24,7 +24,7 @@ RUN rm -rf src
 # Копируем исходный код
 COPY src ./src
 # COPY templates ./templates
-COPY database.db /app/database.db
+COPY database.db ./database.db
 
 # Пересобираем приложение (только наш код, зависимости уже закэшированы)
 RUN cargo build --release --frozen
