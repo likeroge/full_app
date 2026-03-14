@@ -35,17 +35,18 @@ FROM alpine:latest
 # Устанавливаем необходимые библиотеки
 RUN apk add --no-cache libgcc openssl
 # Создаем пользователя для безопасности
-RUN addgroup -g 1000 -S appuser && \
-  adduser -u 1000 -S appuser -G appuser
+# RUN addgroup -g 1000 -S appuser && \
+# adduser -u 1000 -S appuser -G appuser
 # Копируем бинарник из стадии сборки
 # COPY --from=builder /app/target/release/back /usr/local/bin/back
 COPY --from=builder /app/target/release/back /app/back
 # Копируем миграции
 COPY --from=builder /app/migrations /app/migrations
 # Создаем директорию для базы данных
-RUN mkdir -p /app/data && chown -R appuser:appuser /app
+# RUN mkdir -p /app/data && chown -R appuser:appuser /app
+RUN mkdir -p /app/data
 # Переключаемся на непривилегированного пользователя
-USER appuser
+# USER appuser
 WORKDIR /app
 # Открываем порт
 EXPOSE 5005
