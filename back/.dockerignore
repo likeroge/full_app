@@ -1,2 +1,22 @@
-/target
 swagger-ui-5.17.14.zip
+# Игнорируем всё
+*
+# Разрешаем только необходимые файлы
+!Cargo.toml
+!Cargo.lock
+!src/
+!migrations/
+!Dockerfile
+!Dockerfile.dev
+!docker-compose.yml
+!docker-compose.dev.yml
+# Исключаем
+target/
+.git/
+.gitignore
+*.db
+*.db-shm
+*.db-wal
+.env
+.env.*
+*.log
