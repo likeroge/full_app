@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
   ca-certificates \
   && rm -rf /var/lib/apt/lists/*
 
-ENV DATABASE_URL=sqlite:///data/database.db
+ENV DATABASE_URL=sqlite:///app/data/database.db
 
 WORKDIR /app
 # Копируем только файлы зависимостей
@@ -17,16 +17,19 @@ COPY Cargo.toml Cargo.lock ./
 # Создаем фиктивный main.rs для предварительной компиляции зависимостей
 RUN mkdir -p src && \
   echo "fn main() {}" > src/main.rs
-# Компилируем зависимости (это будет закэшировано)
-RUN cargo build --release
-# Удаляем фиктивный main.rs
-RUN rm -rf src
+
+# Создаем пустой проект для кэширования зависимостей
+RUN mkdir src && \
+  echo "fn main() {}" > src/main.rs && \
+  cargo build --release && \
+  rm -rf src
 
 # Копируем исходный код
 COPY src ./src
 COPY migrations ./migrations
 # COPY templates ./templates
 # Пересобираем приложение (только наш код, зависимости уже закэшированы)
+# RUN cargo build --release --frozen
 RUN cargo build --release --frozen
 
 # Второй этап: минимальный runtime образ
