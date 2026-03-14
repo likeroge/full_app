@@ -15,8 +15,6 @@ WORKDIR /app
 COPY Cargo.toml Cargo.lock ./
 # COPY database.db database.db
 # Создаем фиктивный main.rs для предварительной компиляции зависимостей
-RUN mkdir -p src && \
-  echo "fn main() {}" > src/main.rs
 
 # Создаем пустой проект для кэширования зависимостей
 RUN mkdir src && \
