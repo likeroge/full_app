@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
   ca-certificates \
   && rm -rf /var/lib/apt/lists/*
 
-ENV DATABASE_URL=sqlite:///app/data/database.db
+ENV DATABASE_URL=sqlite:///data/database.db
 
 WORKDIR /app
 # Копируем только файлы зависимостей
@@ -38,7 +38,8 @@ RUN apk add --no-cache libgcc openssl
 RUN addgroup -g 1000 -S appuser && \
   adduser -u 1000 -S appuser -G appuser
 # Копируем бинарник из стадии сборки
-COPY --from=builder /app/target/release/back /usr/local/bin/back
+# COPY --from=builder /app/target/release/back /usr/local/bin/back
+COPY --from=builder /app/target/release/back /app/back
 # Копируем миграции
 COPY --from=builder /app/migrations /app/migrations
 # Создаем директорию для базы данных
