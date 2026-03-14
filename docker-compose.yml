@@ -19,7 +19,7 @@ services:
       # Монтируем Cargo.toml и Cargo.lock
       - ./Cargo.toml:/app/Cargo.toml:ro
       - ./Cargo.lock:/app/Cargo.lock:ro
-      - app_data:/app/data
+      - ./app/data:/app/data
       # - ./database.db:/app/database.db
       # - ./database.db:/app/database.db
       # - ./templates:/app/static
