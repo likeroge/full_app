@@ -8,17 +8,18 @@ services:
     ports:
       - "5005:5005"
     environment:
-      - DATABASE_URL=sqlite:///database.db
+      - DATABASE_URL=sqlite:///app/data/database.db
     # - PORT=5000
     restart: unless-stopped
     volumes:
       - ./src:/app/src:ro
+      - ./migrations:/app/migrations
       # - ./templates:/app/templates
       # - ./static:/app/static
       # Монтируем Cargo.toml и Cargo.lock
       - ./Cargo.toml:/app/Cargo.toml:ro
       - ./Cargo.lock:/app/Cargo.lock:ro
-      - ./database.db:/app/database.db
+      - app_data:/app/data
       # - ./database.db:/app/database.db
       # - ./database.db:/app/database.db
       # - ./templates:/app/static
@@ -48,6 +49,8 @@ services:
       - backend
     networks:
       - app-network
+volumes:
+  app_data:
 
 networks:
   app-network:
