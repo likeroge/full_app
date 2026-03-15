@@ -2,6 +2,8 @@ swagger-ui-5.17.14.zip
 # Игнорируем всё
 *
 # Разрешаем только необходимые файлы
+!.sqlx/
+!data/
 !Cargo.toml
 !Cargo.lock
 !src/
