@@ -1,17 +1,18 @@
+use std::sync::Arc;
+
 use axum::extract::Path;
 use axum::{Extension, Json};
 use serde_json::json;
 use sqlx::SqlitePool;
 
+use crate::repository::ApplicationRepo;
 use crate::{
-    api_errors::ApiError,
-    api_responses::ApiResponse,
-    models::{dto::users::CreateUserDto, user::User},
+    api_errors::ApiError, api_responses::ApiResponse, models::dto::users::CreateUserDto,
     repository::user_repository::UserRepository,
 };
 
 pub async fn create_user(
-    Extension(pool): Extension<SqlitePool>,
+    Extension(pool): Extension<Arc<SqlitePool>>,
     Json(new_user): Json<CreateUserDto>,
 ) -> Result<ApiResponse, ApiError> {
     let user_repo = UserRepository::new(pool);
@@ -26,13 +27,14 @@ pub async fn create_user(
         (status = 200, description = "Пользователь"),
         ) )]
 pub async fn get_by_id(
-    Extension(pool): Extension<SqlitePool>,
+    // Extension(pool): Extension<Arc<SqlitePool>>,
+    Extension(repo): Extension<Arc<ApplicationRepo>>,
     Path(id): Path<i32>,
 ) -> Result<ApiResponse, ApiError> {
-    let repo = UserRepository::new(pool);
-    match repo.get_user_by_id(id).await {
-        Ok(_) => todo!(),
-        Err(_) => todo!(),
+    // let repo = UserRepository::new(pool);
+    match repo.user_repo.get_user_by_id(id).await {
+        Ok(u) => Ok(ApiResponse::JsonData(json!(u))),
+        Err(err) => Err(ApiError::BadRequest),
     }
 }
 
@@ -41,11 +43,13 @@ pub async fn get_by_id(
         (status = 500, description = "Внутренняя ошибка сервера")
     ),
     tag = "users")]
-pub async fn all_users(Extension(pool): Extension<SqlitePool>) -> Result<ApiResponse, ApiError> {
-    let user_repo = UserRepository::new(pool);
+pub async fn all_users(
+    Extension(repo): Extension<Arc<ApplicationRepo>>,
+) -> Result<ApiResponse, ApiError> {
+    // let user_repo = UserRepository::new(pool);
 
     // match user_repo.await.get_all().await {
-    match user_repo.get_all().await {
+    match repo.user_repo.get_all().await {
         Ok(users) => Ok(ApiResponse::JsonData(json!(users))),
         Err(e) => Err(ApiError::BadRequest),
     }
