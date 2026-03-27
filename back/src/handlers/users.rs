@@ -46,9 +46,6 @@ pub async fn get_by_id(
 pub async fn all_users(
     Extension(repo): Extension<Arc<ApplicationRepo>>,
 ) -> Result<ApiResponse, ApiError> {
-    // let user_repo = UserRepository::new(pool);
-
-    // match user_repo.await.get_all().await {
     match repo.user_repo.get_all().await {
         Ok(users) => Ok(ApiResponse::JsonData(json!(users))),
         Err(e) => Err(ApiError::BadRequest),

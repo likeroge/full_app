@@ -12,6 +12,7 @@ swagger-ui-5.17.14.zip
 !Dockerfile.dev
 !docker-compose.yml
 !docker-compose.dev.yml
+
 # Исключаем
 target/
 .git/
